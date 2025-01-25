@@ -3,7 +3,6 @@ package br.com.redeSocialPB.models;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_posts")
@@ -11,7 +10,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(name = "mensagem")
     private String mensagem;
@@ -23,11 +22,11 @@ public class Post {
     public Post() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
