@@ -1,11 +1,14 @@
 package br.com.redeSocialPB.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_posts")
+@JsonIgnoreProperties({"user"})
 public class Post {
 
     @Id
@@ -18,6 +21,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     public Post() {
     }
