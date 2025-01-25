@@ -1,13 +1,24 @@
 package br.com.redeSocialPB.models;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_comments")
 public class Comment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "comentario")
     private String comentario;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Comment() {
     }
@@ -26,6 +37,14 @@ public class Comment {
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
