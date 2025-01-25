@@ -1,0 +1,52 @@
+package br.com.redeSocialPB.services;
+
+import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.repositories.CommentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class CommentService {
+
+    private CommentRepository commentRepository;
+
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+
+    public List<Comment> getComments() {
+        return commentRepository.findAll();
+    }
+
+    public Comment getComment(String id) {
+        return commentRepository.findById(id).orElseThrow(() -> new RuntimeException("Comentário não encontrado!"));
+    }
+
+    public Comment createComment(Comment c) {
+        return commentRepository.save(c);
+    }
+
+    public void deleteComment(String id) {
+        Optional<Comment> commentOpt = commentRepository.findById(id);
+        if(commentOpt.isPresent()) {
+            commentRepository.deleteById(id);
+            return;
+        }
+        throw new RuntimeException("Comentário com id " + id +
+                " não foi encontrado para ser deletado!");
+
+    }
+
+    public Comment updateComment(String id, Comment c) {
+        Optional<Comment> commentOpt = commentRepository.findById(id);
+        if(commentOpt.isPresent()) {
+            Comment toUpdate = commentOpt.get();
+            toUpdate.setComentario(c.getComentario());
+            return commentRepository.save(toUpdate);
+        }
+        throw new RuntimeException("Comentário com id " + id +
+                " não foi encontrado para ser atualizado!");
+    }
+}
