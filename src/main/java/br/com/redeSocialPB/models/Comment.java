@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_comments")
-@JsonIgnoreProperties({"user"})
+@JsonIgnoreProperties({"user", "post"})
 public class Comment {
 
     @Id
