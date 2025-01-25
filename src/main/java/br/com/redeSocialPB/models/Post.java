@@ -3,6 +3,7 @@ package br.com.redeSocialPB.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +27,7 @@ public class Post {
     private List<Comment> comments;
 
     public Post() {
+        this.comments = new ArrayList<>();
     }
 
     public String getId() {
