@@ -3,6 +3,7 @@ package br.com.redeSocialPB.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +17,12 @@ public class Comment {
 
     @Column(name = "comentario")
     private String comentario;
+
+    @Column(name = "data_criacao")
+    private LocalDate dataCriacao;
+
+    @Column(name = "data_atualizacao")
+    private LocalDate dataAtualizacao;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -58,6 +65,22 @@ public class Comment {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDate getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDate dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     @Override
