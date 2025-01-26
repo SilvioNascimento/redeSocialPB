@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +24,12 @@ public class Comment {
 
     @Column(name = "data_atualizacao")
     private LocalDate dataAtualizacao;
+
+    @Column(name = "hora_criacao")
+    private LocalTime horaCriacao;
+
+    @Column(name = "hora_atualizacao")
+    private LocalTime horaAtualizacao;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -77,6 +84,22 @@ public class Comment {
 
     public LocalDate getDataAtualizacao() {
         return dataAtualizacao;
+    }
+
+    public LocalTime getHoraCriacao() {
+        return horaCriacao;
+    }
+
+    public void setHoraCriacao(LocalTime horaCriacao) {
+        this.horaCriacao = horaCriacao;
+    }
+
+    public LocalTime getHoraAtualizacao() {
+        return horaAtualizacao;
+    }
+
+    public void setHoraAtualizacao(LocalTime horaAtualizacao) {
+        this.horaAtualizacao = horaAtualizacao;
     }
 
     public void setDataAtualizacao(LocalDate dataAtualizacao) {

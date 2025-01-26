@@ -5,7 +5,7 @@ import br.com.redeSocialPB.repositories.CommentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +28,7 @@ public class CommentService {
 
     public Comment createComment(Comment c) {
         c.setDataCriacao(LocalDate.now());
+        c.setHoraCriacao(LocalTime.now());
         return commentRepository.save(c);
     }
 
@@ -48,6 +49,7 @@ public class CommentService {
             Comment toUpdate = commentOpt.get();
             toUpdate.setComentario(c.getComentario());
             toUpdate.setDataAtualizacao(LocalDate.now());
+            toUpdate.setHoraAtualizacao(LocalTime.now());
             return commentRepository.save(toUpdate);
         }
         throw new RuntimeException("Comentário com id " + id +
