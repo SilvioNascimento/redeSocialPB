@@ -8,7 +8,7 @@ public class PostDTO {
 
     private String id;
     private String mensagem;
-    private List<Comment> comments;
+    private List<CommentDTO> comments;
 
     public PostDTO() {
     }
@@ -29,11 +29,11 @@ public class PostDTO {
         this.mensagem = mensagem;
     }
 
-    public List<Comment> getComments() {
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 }
