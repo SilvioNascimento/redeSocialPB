@@ -1,6 +1,7 @@
 package br.com.redeSocialPB.services;
 
 import br.com.redeSocialPB.models.Post;
+import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class PostService {
 
     private PostRepository postRepository;
+    private CommentRepository commentRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, CommentRepository commentRepository) {
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
     }
 
     public List<Post> getPosts() {
