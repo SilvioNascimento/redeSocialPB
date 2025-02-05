@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.repositories.PostRepository;
@@ -58,5 +59,18 @@ public class PostService {
         }
         throw new RuntimeException("Post com id " + id +
                 " não foi encontrado para ser atualizado!");
+    }
+
+    public Post addCommentToPost(String postId, String commentId) {
+        Optional<Post> postOpt = postRepository.findByIdWithComments(postId);
+        Optional<Comment> commentOpt = commentRepository.findById(commentId);
+
+        if(postOpt.isPresent() && commentOpt.isPresent()) {
+            Post p = postOpt.get();
+            Comment c = commentOpt.get();
+            p.getComments().add(c);
+            return postRepository.save(p);
+        }
+        return null;
     }
 }
