@@ -68,7 +68,10 @@ public class PostService {
         if(postOpt.isPresent() && commentOpt.isPresent()) {
             Post p = postOpt.get();
             Comment c = commentOpt.get();
+
+            c.setPost(p);
             p.getComments().add(c);
+            commentRepository.save(c);
             return postRepository.save(p);
         }
         return null;
