@@ -57,6 +57,11 @@ public class PostController {
         return convertToDTO(postService.addCommentToPost(postId, commentId));
     }
 
+    @PutMapping(value = "/post/{postId}/comment/{commentId}/removeCommentToPost")
+    public PostDTO removeCommentToPost(@PathVariable String postId, @PathVariable String commentId) {
+        return convertToDTO(postService.removeCommentToPost(postId, commentId));
+    }
+
     @DeleteMapping(value = "/post/{postId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable String postId) {
