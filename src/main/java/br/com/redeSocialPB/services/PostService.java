@@ -76,4 +76,20 @@ public class PostService {
         }
         return null;
     }
+
+    public Post removeCommentToPost(String postId, String commentId) {
+        Optional<Post> postOpt = postRepository.findByIdWithComments(postId);
+        Optional<Comment> commentOpt = commentRepository.findById(commentId);
+
+        if(postOpt.isPresent() && commentOpt.isPresent()) {
+            Post p = postOpt.get();
+            Comment c = commentOpt.get();
+
+            c.setPost(null);
+            p.getComments().remove(c);
+            commentRepository.save(c);
+            return postRepository.save(p);
+        }
+        return null;
+    }
 }
