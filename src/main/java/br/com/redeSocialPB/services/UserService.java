@@ -74,8 +74,7 @@ public class UserService {
             User u = userOpt.get();
             Post p = postOpt.get();
 
-            u.getPosts().add(p);
-            p.setUser(u);
+            u.addPost(p);
             postRepository.save(p);
             return userRepository.save(u);
         }
@@ -90,8 +89,7 @@ public class UserService {
             User u = userOpt.get();
             Post p = postOpt.get();
 
-            u.getPosts().remove(p);
-            p.setUser(null);
+            u.removePost(p);
             postRepository.save(p);
             return userRepository.save(u);
         }
