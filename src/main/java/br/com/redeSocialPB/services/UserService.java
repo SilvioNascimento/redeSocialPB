@@ -1,6 +1,8 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.repositories.PostRepository;
 import br.com.redeSocialPB.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,11 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private PostRepository postRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     public List<User> getUsers() {
@@ -60,5 +64,37 @@ public class UserService {
         }
         throw new RuntimeException("User com id " + id +
                 " não foi encontrado para ser atualizado!");
+    }
+
+    public User addPostToUser(String userId, String postId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if(userOpt.isPresent() && postOpt.isPresent()) {
+            User u = userOpt.get();
+            Post p = postOpt.get();
+
+            u.getPosts().add(p);
+            p.setUser(u);
+            postRepository.save(p);
+            return userRepository.save(u);
+        }
+        return null;    // Lembrar de desenvolver as exceções
+    }
+
+    public User removePostToUser(String userId, String postId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if(userOpt.isPresent() && postOpt.isPresent()) {
+            User u = userOpt.get();
+            Post p = postOpt.get();
+
+            u.getPosts().remove(p);
+            p.setUser(null);
+            postRepository.save(p);
+            return userRepository.save(u);
+        }
+        return null;    // Lembrar de desenvolver as exceções
     }
 }
