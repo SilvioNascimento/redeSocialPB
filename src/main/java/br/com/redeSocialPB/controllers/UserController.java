@@ -51,6 +51,16 @@ public class UserController {
         return convertToDTO(userUpdated);
     }
 
+    @PutMapping(value = "/user/{userId}/post/{postId}/addPostToUser")
+    public UserDTO addPostToUser(@PathVariable String userId, @PathVariable String postId) {
+        return convertToDTO(userService.addPostToUser(userId, postId));
+    }
+
+    @PutMapping(value = "/user/{userId}/post/{postId}/removePostToUser")
+    public UserDTO removePostToUser(@PathVariable String userId, @PathVariable String postId) {
+        return convertToDTO(userService.removePostToUser(userId, postId));
+    }
+
     @DeleteMapping(value = "/user/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable String userId) {
