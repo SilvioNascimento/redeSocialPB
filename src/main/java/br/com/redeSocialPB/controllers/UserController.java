@@ -3,8 +3,10 @@ package br.com.redeSocialPB.controllers;
 import br.com.redeSocialPB.dto.UserDTO;
 import br.com.redeSocialPB.models.User;
 import br.com.redeSocialPB.services.UserService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
+@Validated
 public class UserController {
 
     private final ModelMapper modelMapper;
@@ -37,7 +40,7 @@ public class UserController {
 
     @PostMapping(value = "/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
         User u = convertToEntity(userDTO);
         User saved = userService.createUser(u);
         return convertToDTO(saved);

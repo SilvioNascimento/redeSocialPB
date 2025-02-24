@@ -3,7 +3,9 @@ package br.com.redeSocialPB.controllers;
 import br.com.redeSocialPB.dto.CommentDTO;
 import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.services.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
+@Validated
 public class CommentController {
 
     private final ModelMapper modelMapper;
@@ -37,7 +40,7 @@ public class CommentController {
 
     @PostMapping(value = "/comment")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDTO createComment(@RequestBody CommentDTO commentDTO) {
+    public CommentDTO createComment(@Valid @RequestBody CommentDTO commentDTO) {
         Comment c = convertToEntity(commentDTO);
         Comment saved = commentService.createComment(c);
         return convertToDTO(saved);
