@@ -2,6 +2,7 @@ package br.com.redeSocialPB.dto;
 
 import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.models.Post;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class UserDTO {
     @NotNull(message = "Nome não pode ser nulo")
     private String nome;
 
-
+    @Email
     private String email;
 
     @NotBlank(message = "Senha não pode ser em branco")
