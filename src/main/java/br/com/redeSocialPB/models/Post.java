@@ -16,7 +16,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "mensagem")
+    @Column(name = "mensagem", columnDefinition = "TEXT")
     private String mensagem;
 
     @ManyToOne

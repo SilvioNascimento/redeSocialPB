@@ -16,7 +16,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "comentario")
+    @Column(name = "comentario", columnDefinition = "TEXT")
     private String comentario;
 
     @Column(name = "data_criacao")
