@@ -82,6 +82,16 @@ public class User {
         this.comments = comments;
     }
 
+    public void addPost(Post post) {
+        this.posts.add(post);
+        post.setUser(this);
+    }
+
+    public void removePost(Post post) {
+        this.posts.remove(post);
+        post.setUser(null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
