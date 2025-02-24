@@ -1,13 +1,19 @@
 package br.com.redeSocialPB.dto;
 
 import br.com.redeSocialPB.models.Comment;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
 public class PostDTO {
 
     private String id;
+
+    @NotBlank(message = "Mensagem não pode ser em branco")
+    @NotEmpty(message = "Mensagem não pode ser vazia")
+    @NotNull(message = "Mensagem não pode ser nula")
     private String mensagem;
+
     private List<Comment> comments;
 
     public PostDTO() {

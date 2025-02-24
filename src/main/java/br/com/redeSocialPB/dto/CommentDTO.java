@@ -2,12 +2,17 @@ package br.com.redeSocialPB.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CommentDTO {
     private String id;
+
+    @NotBlank(message = "Comentário não pode ser em branco")
+    @NotEmpty(message = "Comentário não pode ser vazia")
+    @NotNull(message = "Comentário não pode ser nula")
     private String comentario;
 
     @JsonAlias({"datacriacao", "data_criacao"})
