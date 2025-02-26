@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.exception.UserNotFoundException;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.models.User;
 import br.com.redeSocialPB.repositories.PostRepository;
@@ -26,7 +27,8 @@ public class UserService {
 
     public User getUser(String id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User não encontrado!"));
+                .orElseThrow(() -> new UserNotFoundException("Usuário com id " +
+                        id + " não foi encontrado!"));
     }
 
     public User createUser(User u) {
@@ -39,7 +41,7 @@ public class UserService {
             userRepository.deleteById(id);
             return;
         }
-        throw new RuntimeException("User com id " + id +
+        throw new UserNotFoundException("User com id " + id +
                 " não foi encontrado para ser deletado!");
     }
 
@@ -62,7 +64,7 @@ public class UserService {
 
             return userRepository.save(toUpdate);
         }
-        throw new RuntimeException("User com id " + id +
+        throw new UserNotFoundException("User com id " + id +
                 " não foi encontrado para ser atualizado!");
     }
 
