@@ -1,5 +1,7 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.exception.CommentNotFoundException;
+import br.com.redeSocialPB.exception.PostNotFoundException;
 import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.repositories.CommentRepository;
@@ -26,7 +28,8 @@ public class PostService {
 
     public Post getPost(String id) {
         return postRepository.findByIdWithComments(id)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado!"));
+                .orElseThrow(() -> new PostNotFoundException("Post com id " +
+                        id + " não foi encontrado!"));
     }
 
     public Post createPost(Post p) {
@@ -39,7 +42,7 @@ public class PostService {
             postRepository.deleteById(id);
             return;
         }
-        throw new RuntimeException("Post com id " + id +
+        throw new PostNotFoundException("Post com id " + id +
                 " não foi encontrado para ser deletado!");
     }
 
@@ -57,7 +60,7 @@ public class PostService {
 
             return postRepository.save(toUpdate);
         }
-        throw new RuntimeException("Post com id " + id +
+        throw new PostNotFoundException("Post com id " + id +
                 " não foi encontrado para ser atualizado!");
     }
 
@@ -74,7 +77,13 @@ public class PostService {
             commentRepository.save(c);
             return postRepository.save(p);
         }
-        return null;
+        else if(postOpt.isEmpty()){
+            throw new PostNotFoundException("Post com id " + postId +
+                    " não existe!");
+        } else {
+            throw new CommentNotFoundException("Comentário com id " + commentId +
+                    " não existe!");
+        }
     }
 
     public Post removeCommentToPost(String postId, String commentId) {
