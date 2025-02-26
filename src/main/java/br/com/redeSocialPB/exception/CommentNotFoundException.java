@@ -1,4 +1,4 @@
-package br.com.redeSocialPB.validation;
+package br.com.redeSocialPB.exception;
 
 public class CommentNotFoundException extends RuntimeException {
     public CommentNotFoundException() {
