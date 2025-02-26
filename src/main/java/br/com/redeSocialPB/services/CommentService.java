@@ -2,6 +2,7 @@ package br.com.redeSocialPB.services;
 
 import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.repositories.CommentRepository;
+import br.com.redeSocialPB.exception.CommentNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,7 +24,8 @@ public class CommentService {
     }
 
     public Comment getComment(String id) {
-        return commentRepository.findById(id).orElseThrow(() -> new RuntimeException("Comentário não encontrado!"));
+        return commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException("Comentário com a id " +
+                id + " não foi encontrado!"));
     }
 
     public Comment createComment(Comment c) {
@@ -38,7 +40,7 @@ public class CommentService {
             commentRepository.deleteById(id);
             return;
         }
-        throw new RuntimeException("Comentário com id " + id +
+        throw new CommentNotFoundException("Comentário com id " + id +
                 " não foi encontrado para ser deletado!");
 
     }
@@ -52,7 +54,7 @@ public class CommentService {
             toUpdate.setHoraAtualizacao(LocalTime.now());
             return commentRepository.save(toUpdate);
         }
-        throw new RuntimeException("Comentário com id " + id +
+        throw new CommentNotFoundException("Comentário com id " + id +
                 " não foi encontrado para ser atualizado!");
     }
 }
