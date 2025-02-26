@@ -99,6 +99,12 @@ public class PostService {
             commentRepository.save(c);
             return postRepository.save(p);
         }
-        return null;
+        else if(postOpt.isEmpty()){
+            throw new PostNotFoundException("Post com id " + postId +
+                    " não existe!");
+        } else {
+            throw new CommentNotFoundException("Comentário com id " + commentId +
+                    " não existe!");
+        }
     }
 }
