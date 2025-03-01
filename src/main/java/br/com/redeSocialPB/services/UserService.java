@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.exception.UserAlreadyExistsException;
 import br.com.redeSocialPB.exception.UserNotFoundException;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.models.User;
@@ -32,6 +33,10 @@ public class UserService {
     }
 
     public User createUser(User u) {
+        if(userRepository.findByUsername(u.getUsername()) != null) {
+            throw new UserAlreadyExistsException("Usuário com username " + u.getUsername()
+            + " já existe!");
+        }
         return userRepository.save(u);
     }
 
