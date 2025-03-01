@@ -23,6 +23,11 @@ public class UserDTO {
     @EmailsExistentes
     private String email;
 
+    @NotBlank(message = "Username não pode ser em branco")
+    @NotEmpty(message = "Username não pode ser vazio")
+    @NotNull(message = "Username não pode ser nulo")
+    private String username;
+
     @NotBlank(message = "Senha não pode ser em branco")
     @NotEmpty(message = "Senha não pode ser vazia")
     @NotNull(message = "Senha não pode ser nula")
