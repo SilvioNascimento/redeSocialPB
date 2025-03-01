@@ -3,8 +3,7 @@ package br.com.redeSocialPB.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -20,16 +19,10 @@ public class Comment {
     private String comentario;
 
     @Column(name = "data_criacao")
-    private LocalDate dataCriacao;
+    private LocalDateTime dataCriacao;
 
     @Column(name = "data_atualizacao")
-    private LocalDate dataAtualizacao;
-
-    @Column(name = "hora_criacao")
-    private LocalTime horaCriacao;
-
-    @Column(name = "hora_atualizacao")
-    private LocalTime horaAtualizacao;
+    private LocalDateTime dataAtualizacao;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -74,35 +67,19 @@ public class Comment {
         this.post = post;
     }
 
-    public LocalDate getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getDataAtualizacao() {
+    public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public LocalTime getHoraCriacao() {
-        return horaCriacao;
-    }
-
-    public void setHoraCriacao(LocalTime horaCriacao) {
-        this.horaCriacao = horaCriacao;
-    }
-
-    public LocalTime getHoraAtualizacao() {
-        return horaAtualizacao;
-    }
-
-    public void setHoraAtualizacao(LocalTime horaAtualizacao) {
-        this.horaAtualizacao = horaAtualizacao;
-    }
-
-    public void setDataAtualizacao(LocalDate dataAtualizacao) {
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 

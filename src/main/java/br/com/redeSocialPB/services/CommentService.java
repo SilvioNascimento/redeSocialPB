@@ -5,8 +5,7 @@ import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +28,7 @@ public class CommentService {
     }
 
     public Comment createComment(Comment c) {
-        c.setDataCriacao(LocalDate.now());
-        c.setHoraCriacao(LocalTime.now());
+        c.setDataCriacao(LocalDateTime.now());
         return commentRepository.save(c);
     }
 
@@ -50,8 +48,7 @@ public class CommentService {
         if(commentOpt.isPresent()) {
             Comment toUpdate = commentOpt.get();
             toUpdate.setComentario(c.getComentario());
-            toUpdate.setDataAtualizacao(LocalDate.now());
-            toUpdate.setHoraAtualizacao(LocalTime.now());
+            toUpdate.setDataAtualizacao(LocalDateTime.now());
             return commentRepository.save(toUpdate);
         }
         throw new CommentNotFoundException("Comentário com id " + id +
