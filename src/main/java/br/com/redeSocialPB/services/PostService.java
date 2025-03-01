@@ -8,6 +8,7 @@ import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class PostService {
     }
 
     public Post createPost(Post p) {
+        p.setDataCriacao(LocalDateTime.now());
         return postRepository.save(p);
     }
 
@@ -52,6 +54,7 @@ public class PostService {
             Post toUpdate = postOpt.get();
 
             toUpdate.setMensagem(p.getMensagem());
+            toUpdate.setDataAtualizacao(LocalDateTime.now());
             toUpdate.setUser(p.getUser());
 
             if (p.getComments() != null) {
