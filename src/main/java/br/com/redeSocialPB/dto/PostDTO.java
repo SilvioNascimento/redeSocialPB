@@ -1,8 +1,11 @@
 package br.com.redeSocialPB.dto;
 
 import br.com.redeSocialPB.models.Comment;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDTO {
@@ -13,6 +16,14 @@ public class PostDTO {
     @NotEmpty(message = "Mensagem não pode ser vazia")
     @NotNull(message = "Mensagem não pode ser nula")
     private String mensagem;
+
+    @JsonAlias({"datacriacao", "data_criacao"})
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCriacao;
+
+    @JsonAlias({"dataatualizacao", "data_atualizacao"})
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataAtualizacao;
 
     private List<Comment> comments;
 
@@ -37,6 +48,22 @@ public class PostDTO {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     public void setComments(List<Comment> comments) {
