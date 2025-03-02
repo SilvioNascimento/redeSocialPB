@@ -61,6 +61,7 @@ public class UserService {
 
             toUpdate.setNome(u.getNome());
             toUpdate.setEmail(u.getEmail());
+            toUpdate.setUsername(u.getUsername());
 
             if (!u.getSenha().equals(toUpdate.getSenha())) {
                 toUpdate.setSenha(bCryptPasswordEncoder.encode(u.getSenha()));
