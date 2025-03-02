@@ -1,6 +1,7 @@
 package br.com.redeSocialPB.controllers;
 
 import br.com.redeSocialPB.dto.UserDTO;
+import br.com.redeSocialPB.dto.UserResponseDTO;
 import br.com.redeSocialPB.models.User;
 import br.com.redeSocialPB.services.UserService;
 import jakarta.validation.Valid;
@@ -26,28 +27,28 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public List<UserDTO> getUsers() {
+    public List<UserResponseDTO> getUsers() {
         return userService.getUsers().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/user/{userId}")
-    public UserDTO getUser(@PathVariable String userId) {
+    public UserResponseDTO getUser(@PathVariable String userId) {
         User u = userService.getUser(userId);
         return convertToDTO(u);
     }
 
     @PostMapping(value = "/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
+    public UserResponseDTO createUser(@Valid @RequestBody UserDTO userDTO) {
         User u = convertToEntity(userDTO);
         User saved = userService.createUser(u);
         return convertToDTO(saved);
     }
 
     @PutMapping(value = "/user/{userId}")
-    public UserDTO updateUser(@PathVariable String userId,
+    public UserResponseDTO updateUser(@PathVariable String userId,
                               @RequestBody UserDTO userDTO) {
         User u = convertToEntity(userDTO);
         User userUpdated = userService.updateUser(userId, u);
@@ -55,12 +56,12 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/{userId}/post/{postId}/addPostToUser")
-    public UserDTO addPostToUser(@PathVariable String userId, @PathVariable String postId) {
+    public UserResponseDTO addPostToUser(@PathVariable String userId, @PathVariable String postId) {
         return convertToDTO(userService.addPostToUser(userId, postId));
     }
 
     @PutMapping(value = "/user/{userId}/post/{postId}/removePostToUser")
-    public UserDTO removePostToUser(@PathVariable String userId, @PathVariable String postId) {
+    public UserResponseDTO removePostToUser(@PathVariable String userId, @PathVariable String postId) {
         return convertToDTO(userService.removePostToUser(userId, postId));
     }
 
@@ -70,8 +71,8 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
-    private UserDTO convertToDTO(User u) {
-        return modelMapper.map(u, UserDTO.class);
+    private UserResponseDTO convertToDTO(User u) {
+        return modelMapper.map(u, UserResponseDTO.class);
     }
 
     private User convertToEntity(UserDTO userDTO) {
