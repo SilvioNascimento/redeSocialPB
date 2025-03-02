@@ -20,6 +20,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "senha")
     private String senha;
 
@@ -90,6 +93,14 @@ public class User {
     public void removePost(Post post) {
         this.posts.remove(post);
         post.setUser(null);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

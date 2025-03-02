@@ -9,8 +9,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
-public class UserDTO {
+public class UserResponseDTO {
 
     private String id;
 
@@ -33,7 +34,11 @@ public class UserDTO {
     @NotNull(message = "Senha não pode ser nula")
     private String senha;
 
-    public UserDTO() {
+    private List<Post> posts;
+
+    private List<Comment> comments;
+
+    public UserResponseDTO() {
     }
 
     public String getId() {
@@ -60,11 +65,48 @@ public class UserDTO {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserResponseDTO that = (UserResponseDTO) o;
+        return Objects.equals(id, that.id) && Objects.equals(email, that.email) && Objects.equals(username, that.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email, username);
     }
 }

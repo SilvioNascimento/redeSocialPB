@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class CommentDTO {
     private String id;
@@ -16,20 +15,12 @@ public class CommentDTO {
     private String comentario;
 
     @JsonAlias({"datacriacao", "data_criacao"})
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCriacao;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCriacao;
 
     @JsonAlias({"dataatualizacao", "data_atualizacao"})
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataAtualizacao;
-
-    @JsonAlias({"horacriacao", "hora_criacao"})
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime horaCriacao;
-
-    @JsonAlias({"horaatualizacao", "hora_atualizacao"})
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime horaAtualizacao;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataAtualizacao;
 
     public CommentDTO() {
     }
@@ -50,35 +41,19 @@ public class CommentDTO {
         this.comentario = comentario;
     }
 
-    public LocalDate getDataCriacao() {
+    public LocalDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getDataAtualizacao() {
+    public LocalDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDate dataAtualizacao) {
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
-    }
-
-    public LocalTime getHoraCriacao() {
-        return horaCriacao;
-    }
-
-    public void setHoraCriacao(LocalTime horaCriacao) {
-        this.horaCriacao = horaCriacao;
-    }
-
-    public LocalTime getHoraAtualizacao() {
-        return horaAtualizacao;
-    }
-
-    public void setHoraAtualizacao(LocalTime horaAtualizacao) {
-        this.horaAtualizacao = horaAtualizacao;
     }
 }

@@ -1,10 +1,12 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.exception.UserWithUsernameAlreadyExistsException;
 import br.com.redeSocialPB.exception.UserNotFoundException;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.models.User;
 import br.com.redeSocialPB.repositories.PostRepository;
 import br.com.redeSocialPB.repositories.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +17,12 @@ public class UserService {
 
     private UserRepository userRepository;
     private PostRepository postRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, PostRepository postRepository) {
+    public UserService(UserRepository userRepository, PostRepository postRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getUsers() {
@@ -32,6 +36,11 @@ public class UserService {
     }
 
     public User createUser(User u) {
+        if(userRepository.findByUsername(u.getUsername()) != null) {
+            throw new UserWithUsernameAlreadyExistsException("Usuário com username " + u.getUsername()
+            + " já existe!");
+        }
+        u.setSenha(bCryptPasswordEncoder.encode(u.getSenha()));
         return userRepository.save(u);
     }
 
@@ -52,7 +61,11 @@ public class UserService {
 
             toUpdate.setNome(u.getNome());
             toUpdate.setEmail(u.getEmail());
-            toUpdate.setSenha(u.getSenha());
+            toUpdate.setUsername(u.getUsername());
+
+            if (!u.getSenha().equals(toUpdate.getSenha())) {
+                toUpdate.setSenha(bCryptPasswordEncoder.encode(u.getSenha()));
+            }
 
             if(u.getPosts() != null){
                 toUpdate.setPosts(u.getPosts());

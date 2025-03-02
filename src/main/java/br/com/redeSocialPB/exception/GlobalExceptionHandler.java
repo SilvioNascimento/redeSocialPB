@@ -31,6 +31,18 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(UserWithUsernameAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse alreadyExistsException(RuntimeException ex) {
+        return new ErrorResponse
+                .Builder()
+                .timestamp(LocalDateTime.now())
+                .code(HttpStatus.CONFLICT.value())
+                .status(HttpStatus.CONFLICT.name())
+                .errors(List.of(ex.getMessage()))
+                .build();
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
         List<String> errorList = ex.getConstraintViolations()
