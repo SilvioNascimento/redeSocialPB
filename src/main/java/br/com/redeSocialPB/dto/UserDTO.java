@@ -33,10 +33,6 @@ public class UserDTO {
     @NotNull(message = "Senha não pode ser nula")
     private String senha;
 
-    private List<Post> posts;
-
-    private List<Comment> comments;
-
     public UserDTO() {
     }
 
@@ -70,21 +66,5 @@ public class UserDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 }
