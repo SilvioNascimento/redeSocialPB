@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.dto;
 
+import br.com.redeSocialPB.enums.Roles;
 import br.com.redeSocialPB.models.Comment;
 import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.validation.EmailsExistentes;
@@ -32,6 +33,8 @@ public class UserDTO {
     @NotEmpty(message = "Senha não pode ser vazia")
     @NotNull(message = "Senha não pode ser nula")
     private String senha;
+
+    private Roles role;
 
     public UserDTO() {
     }
@@ -66,5 +69,13 @@ public class UserDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 }
