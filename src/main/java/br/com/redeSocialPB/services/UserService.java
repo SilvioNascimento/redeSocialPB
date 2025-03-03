@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.services;
 
+import br.com.redeSocialPB.enums.Roles;
 import br.com.redeSocialPB.exception.UserWithUsernameAlreadyExistsException;
 import br.com.redeSocialPB.exception.UserNotFoundException;
 import br.com.redeSocialPB.models.Post;
@@ -41,6 +42,7 @@ public class UserService {
             + " já existe!");
         }
         u.setSenha(bCryptPasswordEncoder.encode(u.getSenha()));
+        u.setRole(Roles.USER);
         return userRepository.save(u);
     }
 
@@ -62,6 +64,7 @@ public class UserService {
             toUpdate.setNome(u.getNome());
             toUpdate.setEmail(u.getEmail());
             toUpdate.setUsername(u.getUsername());
+            toUpdate.setRole(u.getRole());
 
             if (!u.getSenha().equals(toUpdate.getSenha())) {
                 toUpdate.setSenha(bCryptPasswordEncoder.encode(u.getSenha()));
