@@ -113,4 +113,13 @@ public class UserService {
         }
         return null;    // Lembrar de desenvolver as exceções
     }
+
+    public User getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if(user == null) {
+            throw new UserNotFoundException("Usuário " + username + " não foi encontrado!");
+        }
+
+        return user;
+    }
 }
