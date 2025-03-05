@@ -71,6 +71,7 @@ public class AuthController {
             throw new UserNotFoundException("Usuário " + changePasswordRequestDTO.getUsername() +
                     " não foi encontrado!");
         }
+        user.setSenha(changePasswordRequestDTO.getSenha());
         userService.updateUser(user.getId(), user);
         return "Senha alterada com sucesso!";
     }
