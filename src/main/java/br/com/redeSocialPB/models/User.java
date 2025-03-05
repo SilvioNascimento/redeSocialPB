@@ -21,10 +21,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false)
     private String senha;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
