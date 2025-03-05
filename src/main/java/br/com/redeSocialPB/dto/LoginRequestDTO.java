@@ -1,11 +1,11 @@
 package br.com.redeSocialPB.dto;
 
-public class UserLoginDTO {
+public class LoginRequestDTO {
 
     private String username;
     private String senha;
 
-    public UserLoginDTO(String username, String senha) {
+    public LoginRequestDTO(String username, String senha) {
         this.username = username;
         this.senha = senha;
     }

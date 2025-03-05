@@ -1,5 +1,6 @@
 package br.com.redeSocialPB.models;
 
+import br.com.redeSocialPB.enums.Roles;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false)
     private String senha;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -31,6 +32,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comments;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Roles role;
 
     public User() {
         this.posts = new ArrayList<>();
@@ -101,6 +106,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     @Override
