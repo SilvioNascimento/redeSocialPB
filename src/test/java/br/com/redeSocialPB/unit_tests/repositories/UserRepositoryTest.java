@@ -1,4 +1,4 @@
-package br.com.redeSocialPB.unit_tests.repository;
+package br.com.redeSocialPB.unit_tests.repositories;
 
 import br.com.redeSocialPB.enums.Roles;
 import br.com.redeSocialPB.models.User;
