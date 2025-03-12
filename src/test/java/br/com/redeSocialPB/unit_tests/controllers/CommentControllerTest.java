@@ -82,6 +82,7 @@ public class CommentControllerTest {
         commentDTOUpdate.setComentario("Olá! Esse é um comentário atualizado!");
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetComments() throws Exception {
@@ -98,6 +99,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$[1].dataCriacao").value(commentDTO2.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetComment() throws Exception {
@@ -110,6 +112,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.dataCriacao").value(commentDTO1.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetCommentNotFound() throws Exception {
@@ -120,6 +123,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.errors[0]").value("Comentário não encontrado"));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testCreateComment() throws Exception {
@@ -133,6 +137,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.comentario").value(commentCreate.getComentario()));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateComment() throws Exception {
@@ -146,6 +151,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.comentario").value(commentUpdate.getComentario()));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateCommentNotFound() throws Exception {
@@ -158,6 +164,7 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.errors[0]").value("Comentário não encontrado"));
     }
 
+    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testDeleteComment() throws Exception {
