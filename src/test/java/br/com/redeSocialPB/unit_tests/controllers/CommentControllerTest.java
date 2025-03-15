@@ -86,7 +86,7 @@ public class CommentControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetComments() throws Exception {
         List<Comment> comments = Arrays.asList(comment1, comment2);
-        Mockito.when(commentService.getComments()).thenReturn(Arrays.asList(comment1, comment2));
+        Mockito.when(commentService.getComments()).thenReturn(comments);
 
         mockMvc.perform(get("/api/comment"))
                 .andExpect(status().isOk())
