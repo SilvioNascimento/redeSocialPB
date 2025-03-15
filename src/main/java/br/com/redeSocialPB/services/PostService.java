@@ -2,8 +2,8 @@ package br.com.redeSocialPB.services;
 
 import br.com.redeSocialPB.exception.CommentNotFoundException;
 import br.com.redeSocialPB.exception.PostNotFoundException;
-import br.com.redeSocialPB.models.Comment;
-import br.com.redeSocialPB.models.Post;
+import br.com.redeSocialPB.entities.Comment;
+import br.com.redeSocialPB.entities.Post;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.repositories.PostRepository;
 import org.springframework.stereotype.Service;

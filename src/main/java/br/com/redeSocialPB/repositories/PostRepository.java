@@ -1,6 +1,6 @@
 package br.com.redeSocialPB.repositories;
 
-import br.com.redeSocialPB.models.Post;
+import br.com.redeSocialPB.entities.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

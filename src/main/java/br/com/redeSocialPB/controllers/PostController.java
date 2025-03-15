@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.controllers;
 
 import br.com.redeSocialPB.dto.PostDTO;
-import br.com.redeSocialPB.models.Post;
+import br.com.redeSocialPB.entities.Post;
 import br.com.redeSocialPB.services.PostService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;

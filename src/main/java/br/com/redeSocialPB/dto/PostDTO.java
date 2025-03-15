@@ -1,6 +1,6 @@
 package br.com.redeSocialPB.dto;
 
-import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.entities.Comment;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;

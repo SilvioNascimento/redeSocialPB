@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.unit_tests.services;
 
 import br.com.redeSocialPB.exception.CommentNotFoundException;
-import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.services.CommentService;
 import org.junit.jupiter.api.BeforeEach;

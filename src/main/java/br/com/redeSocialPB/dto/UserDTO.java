@@ -1,15 +1,11 @@
 package br.com.redeSocialPB.dto;
 
 import br.com.redeSocialPB.enums.Roles;
-import br.com.redeSocialPB.models.Comment;
-import br.com.redeSocialPB.models.Post;
 import br.com.redeSocialPB.validation.EmailsExistentes;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.List;
 
 public class UserDTO {
 
