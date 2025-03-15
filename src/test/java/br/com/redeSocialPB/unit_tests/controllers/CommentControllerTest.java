@@ -82,7 +82,6 @@ public class CommentControllerTest {
         commentDTOUpdate.setComentario("Olá! Esse é um comentário atualizado!");
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetComments() throws Exception {
@@ -99,31 +98,31 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$[1].dataCriacao").value(commentDTO2.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetComment() throws Exception {
-        Mockito.when(commentService.getComment(comment1.getId())).thenReturn(comment1);
+        String commentId = comment1.getId();
+        Mockito.when(commentService.getComment(commentId)).thenReturn(comment1);
 
-        mockMvc.perform(get("/api/comment/{id}", comment1.getId()))
+        mockMvc.perform(get("/api/comment/{commentId}", commentId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentDTO1.getId()))
                 .andExpect(jsonPath("$.comentario").value(commentDTO1.getComentario()))
                 .andExpect(jsonPath("$.dataCriacao").value(commentDTO1.getDataCriacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testGetCommentNotFound() throws Exception {
-        Mockito.when(commentService.getComment(Mockito.anyString())).thenThrow(new CommentNotFoundException("Comentário não encontrado"));
+        String commentId = UUID.randomUUID().toString();
+        Mockito.when(commentService.getComment(Mockito.eq(commentId)))
+                .thenThrow(new CommentNotFoundException("Comentário com id " + commentId + " não foi encontrado!"));
 
-        mockMvc.perform(get("/api/comment/{id}", UUID.randomUUID().toString()))
+        mockMvc.perform(get("/api/comment/{commentId}", commentId))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.errors[0]").value("Comentário não encontrado"));
+                .andExpect(jsonPath("$.errors[0]").value("Comentário com id " + commentId + " não foi encontrado!"));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testCreateComment() throws Exception {
@@ -137,13 +136,13 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.comentario").value(commentCreate.getComentario()));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateComment() throws Exception {
-        Mockito.when(commentService.updateComment(Mockito.eq(commentUpdate.getId()), Mockito.any(Comment.class))).thenReturn(commentUpdate);
+        String commentId = commentUpdate.getId();
+        Mockito.when(commentService.updateComment(Mockito.eq(commentId), Mockito.any(Comment.class))).thenReturn(commentUpdate);
 
-        mockMvc.perform(put("/api/comment/{id}", commentUpdate.getId())
+        mockMvc.perform(put("/api/comment/{commentId}", commentId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(commentDTOUpdate)))
                 .andExpect(status().isOk())
@@ -151,26 +150,27 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.comentario").value(commentUpdate.getComentario()));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateCommentNotFound() throws Exception {
-        Mockito.when(commentService.updateComment(Mockito.anyString(), Mockito.any(Comment.class))).thenThrow(new CommentNotFoundException("Comentário não encontrado"));
+        String commentId = UUID.randomUUID().toString();
+        Mockito.when(commentService.updateComment(Mockito.eq(commentId), Mockito.any(Comment.class)))
+                .thenThrow(new CommentNotFoundException("Comentário com id " + commentId + " não foi encontrado para ser atualizado!"));
 
-        mockMvc.perform(put("/api/comment/{id}", UUID.randomUUID().toString())
+        mockMvc.perform(put("/api/comment/{commentId}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(commentDTOUpdate))) // Envia o corpo com CommentDTO
-                .andExpect(status().isNotFound()) // Espera o status 404
-                .andExpect(jsonPath("$.errors[0]").value("Comentário não encontrado"));
+                        .content(new ObjectMapper().writeValueAsString(commentDTOUpdate)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errors[0]").value("Comentário com id " + commentId + " não foi encontrado para ser atualizado!"));
     }
 
-    //TODO: Formatar melhor o comentário
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testDeleteComment() throws Exception {
-        Mockito.doNothing().when(commentService).deleteComment(Mockito.anyString());
+        String commentId = UUID.randomUUID().toString();
+        Mockito.doNothing().when(commentService).deleteComment(commentId);
 
-        mockMvc.perform(delete("/api/comment/{commentId}", UUID.randomUUID().toString()))
+        mockMvc.perform(delete("/api/comment/{commentId}", commentId))
                 .andExpect(status().isNoContent());
     }
 
