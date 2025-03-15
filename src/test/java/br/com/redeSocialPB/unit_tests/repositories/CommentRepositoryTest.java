@@ -1,6 +1,6 @@
 package br.com.redeSocialPB.unit_tests.repositories;
 
-import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

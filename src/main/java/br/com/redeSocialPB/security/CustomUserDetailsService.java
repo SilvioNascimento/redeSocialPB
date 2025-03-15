@@ -1,6 +1,6 @@
 package br.com.redeSocialPB.security;
 
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

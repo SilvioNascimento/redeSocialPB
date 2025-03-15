@@ -1,4 +1,4 @@
-package br.com.redeSocialPB.models;
+package br.com.redeSocialPB.entities;
 
 import br.com.redeSocialPB.enums.Roles;
 import jakarta.persistence.*;

@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.config;
 
 import br.com.redeSocialPB.enums.Roles;
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;

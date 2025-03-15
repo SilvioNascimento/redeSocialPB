@@ -2,7 +2,7 @@ package br.com.redeSocialPB.unit_tests.controllers;
 
 import br.com.redeSocialPB.dto.CommentDTO;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
-import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.services.CommentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

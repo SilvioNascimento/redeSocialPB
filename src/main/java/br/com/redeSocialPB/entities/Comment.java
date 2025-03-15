@@ -1,4 +1,4 @@
-package br.com.redeSocialPB.models;
+package br.com.redeSocialPB.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

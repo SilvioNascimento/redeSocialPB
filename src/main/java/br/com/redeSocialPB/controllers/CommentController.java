@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.controllers;
 
 import br.com.redeSocialPB.dto.CommentDTO;
-import br.com.redeSocialPB.models.Comment;
+import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.services.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

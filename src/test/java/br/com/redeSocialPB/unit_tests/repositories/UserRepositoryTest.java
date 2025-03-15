@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.unit_tests.repositories;
 
 import br.com.redeSocialPB.enums.Roles;
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

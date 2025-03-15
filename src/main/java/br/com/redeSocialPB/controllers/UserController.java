@@ -2,7 +2,7 @@ package br.com.redeSocialPB.controllers;
 
 import br.com.redeSocialPB.dto.UserDTO;
 import br.com.redeSocialPB.dto.UserResponseDTO;
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.services.UserService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;

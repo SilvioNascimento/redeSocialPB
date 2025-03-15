@@ -3,7 +3,7 @@ package br.com.redeSocialPB.controllers;
 import br.com.redeSocialPB.dto.*;
 import br.com.redeSocialPB.enums.Roles;
 import br.com.redeSocialPB.exception.UserNotFoundException;
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.security.JwtUtil;
 import br.com.redeSocialPB.services.UserService;
 import jakarta.validation.Valid;

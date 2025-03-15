@@ -1,7 +1,7 @@
 package br.com.redeSocialPB.repositories;
 
 
-import br.com.redeSocialPB.models.User;
+import br.com.redeSocialPB.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
