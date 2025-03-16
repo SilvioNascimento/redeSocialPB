@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +41,14 @@ public class CommentController {
 
     @PostMapping(value = "/comment")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentDTO createComment(@Valid @RequestBody CommentDTO commentDTO) {
+    public CommentDTO createComment(@Valid @RequestBody CommentDTO commentDTO, Principal principal) {
+        if (principal == null) {
+            throw new RuntimeException("Usuário não autenticado");
+        }
+        String username = principal.getName();
+        System.out.println("Usuário autenticado: " + username);
         Comment c = convertToEntity(commentDTO);
-        Comment saved = commentService.createComment(c);
+        Comment saved = commentService.createComment(c, username);
         return convertToDTO(saved);
     }
 

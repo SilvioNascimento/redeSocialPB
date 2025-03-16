@@ -1,8 +1,11 @@
 package br.com.redeSocialPB.services;
 
 import br.com.redeSocialPB.entities.Comment;
+import br.com.redeSocialPB.entities.User;
+import br.com.redeSocialPB.exception.UserNotFoundException;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
+import br.com.redeSocialPB.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,9 +16,11 @@ import java.util.Optional;
 public class CommentService {
 
     private CommentRepository commentRepository;
+    private UserRepository userRepository;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Comment> getComments() {
@@ -27,8 +32,18 @@ public class CommentService {
                 id + " não foi encontrado!"));
     }
 
-    public Comment createComment(Comment c) {
+    public Comment createComment(Comment c, String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null){
+            throw new UserNotFoundException("Usuário com username " + username +
+                    " não foi encontrado!");
+        }
         c.setDataCriacao(LocalDateTime.now());
+
+        c.setUser(user);
+        user.getComments().add(c);
+
+        userRepository.save(user);
         return commentRepository.save(c);
     }
 
