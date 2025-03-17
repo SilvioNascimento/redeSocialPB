@@ -43,16 +43,26 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler({
-            UnauthenticatedUserException.class
-    })
+    @ExceptionHandler(UnauthenticatedUserException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorResponse UnauthenticatedException(RuntimeException ex) {
+    public ErrorResponse unauthenticatedException(RuntimeException ex) {
         return new ErrorResponse
                 .Builder()
                 .timestamp(LocalDateTime.now())
                 .code(HttpStatus.UNAUTHORIZED.value())
                 .status(HttpStatus.UNAUTHORIZED.name())
+                .errors(List.of(ex.getMessage()))
+                .build();
+    }
+
+    @ExceptionHandler(UnauthorizedActionException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse unauthorizedActionsException(RuntimeException ex) {
+        return new ErrorResponse
+                .Builder()
+                .timestamp(LocalDateTime.now())
+                .code(HttpStatus.FORBIDDEN.value())
+                .status(HttpStatus.FORBIDDEN.name())
                 .errors(List.of(ex.getMessage()))
                 .build();
     }
