@@ -2,7 +2,7 @@ package br.com.redeSocialPB.services;
 
 import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.entities.User;
-import br.com.redeSocialPB.exception.UserNotFoundException;
+import br.com.redeSocialPB.exception.UnauthenticatedUserException;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
 import br.com.redeSocialPB.repositories.UserRepository;
@@ -35,7 +35,7 @@ public class CommentService {       // Organizar testes unitários para este ser
     public Comment createComment(Comment c, String username) {
         User user = userRepository.findByUsername(username);
         if (user == null){
-            throw new UserNotFoundException("Usuário com username " + username +
+            throw new UnauthenticatedUserException("Usuário com username " + username +
                     " não foi autenticado!");
         }
         c.setDataCriacao(LocalDateTime.now());
@@ -49,6 +49,10 @@ public class CommentService {       // Organizar testes unitários para este ser
 
     public void deleteComment(String id, String username) {
         User user = userRepository.findByUsername(username);
+        if (user == null){
+            throw new UnauthenticatedUserException("Usuário com username " + username +
+                    " não foi autenticado!");
+        }
         Optional<Comment> commentOpt = commentRepository.findById(id);
         if(commentOpt.isPresent()) {
             Comment comment = commentOpt.get();
@@ -65,6 +69,10 @@ public class CommentService {       // Organizar testes unitários para este ser
 
     public Comment updateComment(String id, Comment c, String username) {
         User user = userRepository.findByUsername(username);
+        if (user == null){
+            throw new UnauthenticatedUserException("Usuário com username " + username +
+                    " não foi autenticado!");
+        }
         Optional<Comment> commentOpt = commentRepository.findById(id);
         if(commentOpt.isPresent()) {
             Comment toUpdate = commentOpt.get();
