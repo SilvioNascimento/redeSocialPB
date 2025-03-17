@@ -36,7 +36,7 @@ public class CommentService {
         User user = userRepository.findByUsername(username);
         if (user == null){
             throw new UserNotFoundException("Usuário com username " + username +
-                    " não foi encontrado!");
+                    " não foi autenticado!");
         }
         c.setDataCriacao(LocalDateTime.now());
 
@@ -47,15 +47,20 @@ public class CommentService {
         return commentRepository.save(c);
     }
 
-    public void deleteComment(String id) {
+    public void deleteComment(String id, String username) {
+        User user = userRepository.findByUsername(username);
         Optional<Comment> commentOpt = commentRepository.findById(id);
         if(commentOpt.isPresent()) {
+            Comment comment = commentOpt.get();
+            if(!comment.getUser().getId().equals(user.getId())) {
+                throw new RuntimeException("O usuário " + username +
+                        " não tem permissão para deleetar este comentário!");   // Desenvolver exceção personalizada
+            }
             commentRepository.deleteById(id);
             return;
         }
         throw new CommentNotFoundException("Comentário com id " + id +
                 " não foi encontrado para ser deletado!");
-
     }
 
     public Comment updateComment(String id, Comment c) {

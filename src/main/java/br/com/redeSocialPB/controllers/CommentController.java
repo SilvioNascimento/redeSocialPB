@@ -42,9 +42,6 @@ public class CommentController {
     @PostMapping(value = "/comment")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentDTO createComment(@Valid @RequestBody CommentDTO commentDTO, Principal principal) {
-        if (principal == null) {
-            throw new RuntimeException("Usuário não autenticado");
-        }
         String username = principal.getName();
         System.out.println("Usuário autenticado: " + username);
         Comment c = convertToEntity(commentDTO);
@@ -62,8 +59,9 @@ public class CommentController {
 
     @DeleteMapping(value = "/comment/{commentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable String commentId) {
-        commentService.deleteComment(commentId);
+    public void deleteComment(@PathVariable String commentId, Principal principal) {
+        String username = principal.getName();
+        commentService.deleteComment(commentId, username);
     }
 
     private CommentDTO convertToDTO(Comment c) {
