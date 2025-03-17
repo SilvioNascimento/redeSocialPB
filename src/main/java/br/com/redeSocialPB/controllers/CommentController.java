@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api")
 @Validated
-public class CommentController {
+public class CommentController {        // Organizar testes unitários para este controller
 
     private final ModelMapper modelMapper;
     private final CommentService commentService;
@@ -51,9 +51,11 @@ public class CommentController {
 
     @PutMapping(value = "/comment/{commentId}")
     public CommentDTO updateComment(@PathVariable String commentId,
-                                    @RequestBody CommentDTO commentDTO) {
+                                    @RequestBody CommentDTO commentDTO,
+                                    Principal principal) {
         Comment c = convertToEntity(commentDTO);
-        Comment commentUpdated = commentService.updateComment(commentId, c);
+        String username = principal.getName();
+        Comment commentUpdated = commentService.updateComment(commentId, c, username);
         return convertToDTO(commentUpdated);
     }
 

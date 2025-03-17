@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentService {
+public class CommentService {       // Organizar testes unitários para este service
 
     private CommentRepository commentRepository;
     private UserRepository userRepository;
@@ -54,7 +54,7 @@ public class CommentService {
             Comment comment = commentOpt.get();
             if(!comment.getUser().getId().equals(user.getId())) {
                 throw new RuntimeException("O usuário " + username +
-                        " não tem permissão para deleetar este comentário!");   // Desenvolver exceção personalizada
+                        " não tem permissão para deletar este comentário!");   // Desenvolver exceção personalizada
             }
             commentRepository.deleteById(id);
             return;
@@ -63,10 +63,15 @@ public class CommentService {
                 " não foi encontrado para ser deletado!");
     }
 
-    public Comment updateComment(String id, Comment c) {
+    public Comment updateComment(String id, Comment c, String username) {
+        User user = userRepository.findByUsername(username);
         Optional<Comment> commentOpt = commentRepository.findById(id);
         if(commentOpt.isPresent()) {
             Comment toUpdate = commentOpt.get();
+            if(!toUpdate.getUser().getId().equals(user.getId())) {
+                throw new RuntimeException("O usuário " + username +
+                        " não tem permissão para atualizar este comentário!");   // Desenvolver exceção personalizada
+            }
             toUpdate.setComentario(c.getComentario());
             toUpdate.setDataAtualizacao(LocalDateTime.now());
             return commentRepository.save(toUpdate);
