@@ -3,6 +3,7 @@ package br.com.redeSocialPB.services;
 import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.exception.UnauthenticatedUserException;
+import br.com.redeSocialPB.exception.UnauthorizedActionException;
 import br.com.redeSocialPB.repositories.CommentRepository;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
 import br.com.redeSocialPB.repositories.UserRepository;
@@ -57,8 +58,8 @@ public class CommentService {       // Organizar testes unitários para este ser
         if(commentOpt.isPresent()) {
             Comment comment = commentOpt.get();
             if(!comment.getUser().getId().equals(user.getId())) {
-                throw new RuntimeException("O usuário " + username +
-                        " não tem permissão para deletar este comentário!");   // Desenvolver exceção personalizada
+                throw new UnauthorizedActionException("O usuário " + username +
+                        " não tem permissão para deletar este comentário!");
             }
             commentRepository.deleteById(id);
             return;
@@ -77,8 +78,8 @@ public class CommentService {       // Organizar testes unitários para este ser
         if(commentOpt.isPresent()) {
             Comment toUpdate = commentOpt.get();
             if(!toUpdate.getUser().getId().equals(user.getId())) {
-                throw new RuntimeException("O usuário " + username +
-                        " não tem permissão para atualizar este comentário!");   // Desenvolver exceção personalizada
+                throw new UnauthorizedActionException("O usuário " + username +
+                        " não tem permissão para atualizar este comentário!");
             }
             toUpdate.setComentario(c.getComentario());
             toUpdate.setDataAtualizacao(LocalDateTime.now());
