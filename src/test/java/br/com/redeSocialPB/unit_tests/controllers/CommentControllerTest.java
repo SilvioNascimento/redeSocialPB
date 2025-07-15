@@ -165,25 +165,27 @@ public class CommentControllerTest {
                 .andExpect(jsonPath("$.errors[0]").value("Comentário com id " + commentId + " não foi encontrado para ser atualizado!"));
     }
 
-//    @Test
-//    @WithMockUser(username = "admin", roles = {"ADMIN"})
-//    void testDeleteComment() throws Exception {
-//        String commentId = UUID.randomUUID().toString();
-//        Mockito.doNothing().when(commentService).deleteComment(commentId);
-//
-//        mockMvc.perform(delete("/api/comment/{commentId}", commentId))
-//                .andExpect(status().isNoContent());
-//    }
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void testDeleteComment() throws Exception {
+        String commentId = UUID.randomUUID().toString();
+        Mockito.doNothing().when(commentService).deleteComment(
+                Mockito.eq(commentId), Mockito.eq("admin"));
 
-//    @Test
-//    @WithMockUser(username = "admin", roles = {"ADMIN"})
-//    void testDeleteCommentNotFound() throws Exception {
-//        String commentId = UUID.randomUUID().toString();
-//        Mockito.doThrow(new CommentNotFoundException("Comentário com id " + commentId + " não foi encontrado para ser deletado!"))
-//                .when(commentService).deleteComment(commentId);
-//
-//        mockMvc.perform(delete("/api/comment/{commentId}", commentId))
-//                .andExpect(status().isNotFound())
-//                .andExpect(jsonPath("$.errors[0]").value("Comentário com id " + commentId + " não foi encontrado para ser deletado!"));
-//    }
+        mockMvc.perform(delete("/api/comment/{commentId}", commentId))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    void testDeleteCommentNotFound() throws Exception {
+        String commentId = UUID.randomUUID().toString();
+        Mockito.doThrow(new CommentNotFoundException("Comentário com id " + commentId + " não foi encontrado para ser deletado!"))
+                .when(commentService).deleteComment(
+                        Mockito.eq(commentId), Mockito.eq("admin"));
+
+        mockMvc.perform(delete("/api/comment/{commentId}", commentId))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errors[0]").value("Comentário com id " + commentId + " não foi encontrado para ser deletado!"));
+    }
 }
