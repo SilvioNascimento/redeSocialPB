@@ -99,24 +99,34 @@ public class CommentServiceTest {
 
     @Test
     void testUpdateComment() {
+        String username = "xtreme_noob";
+
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);
 
         comment.setComentario("Olá! Esse é um comentário atualizado!");
-        Comment updatedComment = commentService.updateComment(comment.getId(), comment);
+        Comment updatedComment = commentService.updateComment(comment.getId(),
+                comment, username);
 
         verify(commentRepository, times(1)).save(updatedComment);
     }
 
     @Test
     void testCommentNotFoundExceptionInUpdateComment() {
+        String username = "xtreme_noob";
+
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.empty());
 
         Comment commentToUpdate = new Comment();
         commentToUpdate.setComentario("Olá! Esse é um comentário teste!");
 
         assertThrows(CommentNotFoundException.class, () -> {
-            commentService.updateComment(comment.getId(), commentToUpdate);
+            commentService.updateComment(comment.getId(),
+                    commentToUpdate, username);
         }, "Deveria lançar a exceção \"CommentNotFoundException\".");
         verify(commentRepository, times(1)).findById(comment.getId());
         verify(commentRepository, never()).save(any(Comment.class));
