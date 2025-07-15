@@ -1,8 +1,10 @@
 package br.com.redeSocialPB.unit_tests.services;
 
+import br.com.redeSocialPB.entities.User;
 import br.com.redeSocialPB.exception.CommentNotFoundException;
 import br.com.redeSocialPB.entities.Comment;
 import br.com.redeSocialPB.repositories.CommentRepository;
+import br.com.redeSocialPB.repositories.UserRepository;
 import br.com.redeSocialPB.services.CommentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,15 +28,29 @@ public class CommentServiceTest {
     @Mock
     private CommentRepository commentRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private CommentService commentService;
 
     private Comment comment;
+    private User user;
 
     @BeforeEach
     void setup() {
+        String userId = UUID.randomUUID().toString();
+
+        user = new User();
+        user.setUsername("xtreme_noob");
+        user.setId(userId);
+        user.setComments(new java.util.ArrayList<>());
+
+        String commentId = UUID.randomUUID().toString();
         comment = new Comment();
         comment.setComentario("Olá pessoal.");
+        comment.setId(commentId);
+        comment.setUser(user);
         comment.setDataCriacao(LocalDateTime.now());
     }
 
@@ -65,9 +82,15 @@ public class CommentServiceTest {
 
     @Test
     void testCreateComment() {
+        String username = "xtreme_noob";
+
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);
 
-        Comment createComment = commentService.createComment(comment);
+        when(userRepository.save(any(User.class))).thenReturn(user);
+
+        Comment createComment = commentService.createComment(comment, username);
         assertNotNull(createComment, "O objeto é nulo.");
         assertEquals(comment.getId(), createComment.getId(),
                 "O id atual (" + createComment.getId() +")" +
@@ -101,20 +124,28 @@ public class CommentServiceTest {
 
     @Test
     void testDeleteComment() {
+        String username = "xtreme_noob";
+
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
         doNothing().when(commentRepository).deleteById(comment.getId());
 
-        commentService.deleteComment(comment.getId());
+        commentService.deleteComment(comment.getId(), username);
 
         verify(commentRepository, times(1)).deleteById(comment.getId());
     }
 
     @Test
     void testCommentNotFoundExceptionInDeleteComment() {
+        String username = "xtreme_noob";
+
+        when(userRepository.findByUsername(username)).thenReturn(user);
+
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.empty());
 
         assertThrows(CommentNotFoundException.class, () -> {
-            commentService.deleteComment(comment.getId());
+            commentService.deleteComment(comment.getId(), username);
         }, "Deveria lançar a exceção \"CommentNotFoundException\".");
         verify(commentRepository, times(1)).findById(comment.getId());
         verify(commentRepository, never()).deleteById(comment.getId());
