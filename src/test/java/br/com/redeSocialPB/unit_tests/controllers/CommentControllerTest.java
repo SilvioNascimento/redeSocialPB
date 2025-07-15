@@ -141,7 +141,8 @@ public class CommentControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateComment() throws Exception {
         String commentId = commentUpdate.getId();
-        Mockito.when(commentService.updateComment(Mockito.eq(commentId), Mockito.any(Comment.class))).thenReturn(commentUpdate);
+        Mockito.when(commentService.updateComment(Mockito.eq(commentId),
+                Mockito.any(Comment.class), Mockito.eq("admin"))).thenReturn(commentUpdate);
 
         mockMvc.perform(put("/api/comment/{commentId}", commentId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -155,7 +156,8 @@ public class CommentControllerTest {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void testUpdateCommentNotFound() throws Exception {
         String commentId = UUID.randomUUID().toString();
-        Mockito.when(commentService.updateComment(Mockito.eq(commentId), Mockito.any(Comment.class)))
+        Mockito.when(commentService.updateComment(Mockito.eq(commentId),
+                        Mockito.any(Comment.class), Mockito.eq("admin")))
                 .thenThrow(new CommentNotFoundException("Comentário com id " + commentId + " não foi encontrado para ser atualizado!"));
 
         mockMvc.perform(put("/api/comment/{commentId}", commentId)
